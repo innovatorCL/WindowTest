@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cn21.innovator.windowtest.ui.WaveLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:gravity="center"
+    tools:context="com.cn21.innovator.windowtest.MainActivity">
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/AppTheme.Button.Green"
+        android:onClick="goToWindowTestActivity"
+        android:text="Window" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/AppTheme.Button.Green"
+        android:onClick="goToSystemWindowActvity"
+        android:text="System Window" />
+
+
+</com.cn21.innovator.windowtest.ui.WaveLinearLayout>
