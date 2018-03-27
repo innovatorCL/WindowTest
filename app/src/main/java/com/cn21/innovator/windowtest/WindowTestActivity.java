@@ -39,16 +39,20 @@ public class WindowTestActivity extends Activity implements OnTouchListener{
       mFloatingButton = new Button(this);
       mFloatingButton.setText("click me");
       mLayoutParams = new WindowManager.LayoutParams(
-              WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, 0, 0,
+              WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, 1, 0,
               PixelFormat.TRANSPARENT);
-      mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-              | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-              | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+      mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL //当前Window区域以外的单击事件传递给底层Window
+                                                                            //以内的交给自己处理
+              | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE  //不需要获取焦点，不接收各种输入事件
+              | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;  // 显示在锁屏界面上
+
       mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+      
       mLayoutParams.gravity = Gravity.LEFT | Gravity.TOP;
       mLayoutParams.x = 100;
       mLayoutParams.y = 300;
       mFloatingButton.setOnTouchListener(this);
+      //添加 View
       mWindowManager.addView(mFloatingButton, mLayoutParams);
     }
   }
@@ -66,6 +70,8 @@ public class WindowTestActivity extends Activity implements OnTouchListener{
         int y = (int) event.getY();
         mLayoutParams.x = rawX;
         mLayoutParams.y = rawY;
+
+        //更新 View
         mWindowManager.updateViewLayout(mFloatingButton, mLayoutParams);
         break;
       }
@@ -82,6 +88,8 @@ public class WindowTestActivity extends Activity implements OnTouchListener{
   @Override
   protected void onDestroy() {
     try {
+
+      // 移除 View
       mWindowManager.removeView(mFloatingButton);
     } catch (IllegalArgumentException e) {
       e.printStackTrace();
